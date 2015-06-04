@@ -1,0 +1,53 @@
+body{
+	/*background-image: url("Images/Ugin_Background.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed; */
+	padding-top: 70px;
+	padding-bottom: 130px;
+	min-height: 100% !important;
+}
+
+.blog-main {
+	background: #FFFFFF;
+	border-style: solid;
+	border-width: 1px;
+	border-color: #BBBBBB;
+	border-radius: 5px;
+	box-shadow: 10px 10px 5px rgba(0,0,0,.5);
+}
+
+.theme-dropdown .dropdown-menu {
+  position: static;
+  display: block;
+  margin-bottom: 20px;
+}
+
+.theme-showcase > p > .btn {
+  margin: 5px 0;
+}
+
+/*
+ * Footer
+ */
+
+.blog-footer {
+  padding: 10px 0;
+  color: #999;
+  text-align: center;
+  background-color: #f9f9f9;
+  border-top: 1px solid #e5e5e5;
+  width: 100%;
+  position: fixed;
+  bottom: 0px;
+}
+.blog-footer p:last-child {
+  margin-bottom: 0;
+}
+
+.search-background {
+	padding: 30px;
+	background-color: #DADADA;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	border-radius: 30px;
+}
