@@ -7,7 +7,7 @@
 		<meta name="description" content="">
 		<meta name="author" content="">
 
-		<title>Rogue Deck Master</title>
+		<title>Rogue Deck Master - Add Deck</title>
 
 		<!-- Bootstrap core CSS (Bootstrap Copyright 2014 to Twitter Inc.) -->
 		<link href="css/bootstrap.min.css" rel="stylesheet">

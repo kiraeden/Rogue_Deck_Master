@@ -19,7 +19,7 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Decks<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li id="view_decks"><a href="deck.php">View Your Decks</a></li>
+						<li id="view_decks"><a href="view_decks.php">View Your Decks</a></li>
 						<li id="add_deck"><a href="add_deck.php">Add Deck</a></li>
 						<li id="edit_decks"><a href="edit_deck.php">Edit Decks</a></li>
 					</ul>				

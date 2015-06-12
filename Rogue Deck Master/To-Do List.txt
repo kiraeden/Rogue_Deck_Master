@@ -1,23 +1,15 @@
 To-Do List for Magic Social Site:
-	1. Figure out why the cards listed in the database for a specific deck are displaying they way they do in the database AND determine if this display issue actually has an effect on how the data appears when it's pulled from the database.
-		a. Doing this will probably rely on solving item 2-a on this list.
+	1. Design the Home page
+		a. I'm thinking this should include the most ten recent deck list postings for each format
+		
+	2. Implement the Login system
 	
-	2. Create a "view decklist" page.
-		a. Create a layout that will define how a deck will display to the user, preferably something similar to the way other websites display deck lists.
-		
-	3. Design the homepage.
+	3. Implement the Collection system
 	
-	4. Figure out if actually making the website public is a viable idea (and doesn't violate anything from Wizards of the Coast).
-		a. I've found a site that does essentially what I wanted to do already called The Meadery. It has a few aspects I don't, and I had one concept for my site that this didn't. I'm not sure that this makes my idea unique enough to work however.
-		
-	5. Design Idea: Allow adding of card collections. (may need a card lookup feature as part of the add function)
-		a. When a user has a card collection, have decklist pages be able to highlight what cards they have and do not have in their collections.
-		b. Allow users to add friends on the site and select whether or not they want to share card pools with their friends.
-		c. Card pools shared with friends will be shown when viewing decklists.
-		d. A user's account will allow them to show several kinds of decks, both conceptual and already constructed decks (with a propensity for other options later)
-		e. The cards in your collection can also be marked as borrowed, with quantity and the name of the borrower so you can keep track of your cards.
-		
-	Notes:
+	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	Build Notes:
+		*I have figured out how to reference decks into a new php document via links into GET requests to deck.php, my next step now is to setup the editing page, using a similar system. I may want to add a link to edit a deck on the view decks page instead of having it be two seperate/repetitive pages.
+	
 		* My idea for adding a card to a collection is to perform autocomplete using Jquery based on the MTG JSON files available on mtgjson with a single input field accompanied by a numerical entry field, and perform a post request with an "Add" button to the side of the input field.
 			*In order for the card to be recognized later if/when I am able to implement the image lookup for cards I may need to verify that the card name input matches a JSON entry via PHP to avoid additional characters being added to a card name.
 			*Once I learn enough JS to make the autocomplete feature function, one project will be figuring out how best to lookup images to use for the page. I have solved the image source problem atleast, I can use Gatherer for my image source easily via http://gatherer.wizards.com/Handlers/Image.ashx?multiverseid=180607&type=card I just have to modify the multiverseid=#
@@ -35,7 +27,8 @@ To-Do List for Magic Social Site:
 			*After that, I need to make it so that the decklist appears below the card entry field as the user is entering cards. Preferably in the format "Creatures, Lands, Spells, Sideboard"
 			
 		*SPECIAL NOTE: Creature types such as Enchantment Creature appear together in the type section of the JSON doc, so to make them appear correctly, I may have to do some parsing of the 'types' to check for the Creature type specifically.
-		
+	-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+	
 	Site Design Notes:
 		* For the Home pages, I'm thinking about having links to a standard compendium of deck lists currently running around in the format, and maybe an estimate of their win chance against another deck archetype. 
 			*Maybe using metrics such as % of keep-able opening hands, and win percentages against basic archetypes. Something like a one-stop-shop for Format decks and information.
