@@ -5,10 +5,18 @@ To-Do List for Magic Social Site:
 	2. Implement the Login system
 	
 	3. Implement the Collection system
+		a. Need to create the database table system.
+		b. Need to retrieve the multiverse ID for cards so I can display images and link to gatherer correctly.
+	
+	4. Add the javascript necessary to show a popup window displaying a card image when the user mouses over a card name.
+		a. To do this, I will need to reference another JSON file containing the card image id used by Wizards Gatherer website. I know it exists, but I think it is also a part of a much larger JSON file that might not be as suited to searching.
+		b. So the multiverseid that I would need to retrieve the card image from gatherer is stored in the AllSets.JSON file. There are two ways I can go about solving this problem:
+			i. The first is that I can use the AllSets.json file directly for all my work. What worries me about this solution is that it would be multiple FOR loops to seek through the file as well as the fact that the file is about 3 times the size of the file im already seeking through.
+			ii. The second option is to create a new JSON file that contains only the information I need to know about the cards. The problem is at the moment that, while I'm sure this is possible, I'm not sure how to do it. There is also the problem to solve that certain sets have reprints of cards and apparently each set's printing has its own multiverseid in gatherer, so I'd have to sort out how to choose the newest copy to use. TCGPlayer's solution to this problem was somewhat elegant in that they had you adding cards to your collection by searching a specific set. I may want to look into this solution as an alternate possibility as well, although I think the need to trim down my JSON files is still relevant.
 	
 	------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 	Build Notes:
-		*I have figured out how to reference decks into a new php document via links into GET requests to deck.php, my next step now is to setup the editing page, using a similar system. I may want to add a link to edit a deck on the view decks page instead of having it be two seperate/repetitive pages.
+		*I have figured out how to reference decks into a new php document via links creating GET requests to deck.php, my next step now is to setup the editing page, using a similar system. I may want to add a link to edit a deck on the view decks page instead of having it be two seperate/repetitive pages.
 	
 		* My idea for adding a card to a collection is to perform autocomplete using Jquery based on the MTG JSON files available on mtgjson with a single input field accompanied by a numerical entry field, and perform a post request with an "Add" button to the side of the input field.
 			*In order for the card to be recognized later if/when I am able to implement the image lookup for cards I may need to verify that the card name input matches a JSON entry via PHP to avoid additional characters being added to a card name.
@@ -33,4 +41,5 @@ To-Do List for Magic Social Site:
 		* For the Home pages, I'm thinking about having links to a standard compendium of deck lists currently running around in the format, and maybe an estimate of their win chance against another deck archetype. 
 			*Maybe using metrics such as % of keep-able opening hands, and win percentages against basic archetypes. Something like a one-stop-shop for Format decks and information.
 			
-	
+		* For adding value to the design, I may need to start thinking about using the format to limit decklists. This also means I'll need to create different JSON lists for each format, and perhaps banlists as JSON files for each format with a ban list as well.
+		* For special formats such as commander or tiny leader, I may want to think about making special deck entry features for those types of formats.

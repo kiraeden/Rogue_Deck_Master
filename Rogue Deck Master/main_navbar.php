@@ -11,10 +11,10 @@
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Collection<b class="caret"></b></a>
 					<ul class="dropdown-menu">
-						<li id="view_cards"><a href="collection.php">View Collection</a></li>
-						<li id="add_cards"><a href="add_collection.php">Add Cards</a></li>
-						<li id="edit_cards"><a href="edit_collection.php">Edit Collection</a></li>
-					</ul>				
+						<li id="view_cards"><a href="collection.php">My Collection</a></li>
+						<li id="add_cards"><a href="add_cards.php">Add Cards</a></li>
+						<li id="edit_cards"><a href="edit_cards.php">Edit Collection</a></li>
+					</ul>
 				</li>
 				<li class="dropdown">
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Decks<b class="caret"></b></a>
@@ -22,7 +22,7 @@
 						<li id="view_decks"><a href="view_decks.php">View Your Decks</a></li>
 						<li id="add_deck"><a href="add_deck.php">Add Deck</a></li>
 						<li id="edit_decks"><a href="edit_deck.php">Edit Decks</a></li>
-					</ul>				
+					</ul>
 				</li>
 				<li id="forum"><a href="#">Forum</a></li>
 				<li id="contact"><a href="#">Contact</a></li>

@@ -67,13 +67,6 @@
 							echo "<td>$row[4]</td>\n";
 							echo "</tr>\n";
 						}
-						
-						function test_input($data) {
-						   $data = trim($data);
-						   $data = stripslashes($data);
-						   $data = htmlspecialchars($data);
-						   return $data;
-						}
 					?>
 				</tbody>
 			</table>

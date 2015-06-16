@@ -14,90 +14,125 @@
 		<link href="css/bootstrap-theme.min.css" rel="stylesheet">
 
 		<!-- Custom styles for this template -->
-		<link href="theme.css" rel="stylesheet">
+		<link href="test.css" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/themes/redmond/jquery-ui.css">
+		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.js"></script>
+		<script type="text/javascript" src="app1.js"></script>
+		<script type="text/javascript">
+
+		</script>
 	</head>
 	
 	<body>
-		<!-- Fixed navbar -->
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="#">Rogue Deck Master</a>
-        </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li><a href="test.php">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-			<li class="dropdown">
-				<a href="#" class="dropdown-toggle" data-toggle="dropdown">Decks <b class="caret"></b></a>
-				<ul class="dropdown-menu">
-					<li class="active"><a href="view.php">View Database</a></li>
-					<li><a href="add.php">Add Item</a></li>
-					<li><a href="edit.php">Edit Database</a></li>
-				</ul>				
-			</li>
-          </ul>
-		  <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
-        </div><!--/.nav-collapse -->
-      </div>
-    </div>
-	
+		<?php
+			require_once "main_navbar.php"; #Fixed navbar stored as a PHP document to simplify working on the nav bar itself. The navbar.php file is itself mostly just an HTML file, I'm doing this more for simplicity.
+		
+			$user = 'admin';  #temporary user value until the login system is implemented !!!REPLACE LATER!!!
+		?>
     <div class="container">
 		<div class="page-header">
 			<h1>Your Collection</h1>
 		</div>
+		<?php
+			require_once "collection_login.php";
+			
+			#login code for MySQL DB, login details set in "login.php" above.
+			$db_server = mysqli_connect($db_hostname, $db_username, $db_password);
+			if(!$db_server) die("Unable to connect to MySQL: " . mysqli_error());
+			mysqli_select_db($db_server, $db_database)
+				or die("Unable to select database: " . mysqli_error());
+			
+			$quantity = $cardname = $set = "";
+			
+			if(!empty($_POST['card-submit'])){
+				$quantity = test_input($_POST["quantity"]);
+				$cardname = test_input($_POST["cardname"]);
+				
+				$string = file_get_contents("AllCards.json");
+				$json_a = json_decode($string, true);
+				
+				foreach ($json_a as $card => $value){
+					if($cardname == test_input($card)){ #this is my version of input validation. I will re-compare the card as it's being entered into the database to ensure that only card data is entered into this field (and so that a mis-spelled card name can't occur either)
+						$valid_card = true;
+						$type = $value['types']; #Creature types such as Enchantment Creature appear together in the type section of the JSON doc, so to make them appear correctly, I may have to do some parsing of the 'types' to check for the Creature type specifically.
+						break;
+					} #There needs to be an additional validation notification if the data the user attempts to enter is not a part of the JSON card database file. But I think this could also be handled in the form by Javascript. need to investigate.
+				}
+			}
+			
+			$query = "SELECT * FROM $user"; #need to make the database for the user's collection
+			$result = mysqli_query($db_server, $query);
+			
+			if(!$result){
+				$query = "CREATE TABLE $user(quantity VARCHAR(128), cardname VARCHAR(128), set VARCHAR(128))";
+				mysqli_query($db_server, $query);
+			}
+			
+			function test_input($data) {
+				$data = trim($data);
+				$data = stripslashes($data);
+				$data = htmlspecialchars($data);
+				return $data;
+			}
+			
+			$rows = mysqli_num_rows($result);
+		?>
 		
-      <!-- Example row of columns -->
-      <div class="row">
+		<!-- Begin Search and Entry Form for collection entry -->
+		
+		<div class="search-background">
+			<form id="searchform" method="post" role="form">
+				<div class="row">
+					<div class="col-lg-1">
+						<div class="form-group">
+							<input class="form-control" type="text" name="quantity" placeholder="#"></input>
+						</div>
+					</div>
+					<div class="col-lg-5">
+						<div class="form-group">
+							<input class="form-control" type="text" id="autocomplete" name="cardname"></input>
+						</div>
+					</div>
+					<div class="col-lg-1 col-lg-offset-1">
+						<div class="form-group">
+							<input class="btn btn-primary" type="submit" name="card-submit" value="Add Card"></input>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		<!-- End Search and Entry Form for collection entry -->
+		
+		<!-- Begin collection table list. -->
+		
+		<div class="row">
 			<table class="table table-striped">
             <thead>
               <tr>
-                <th>#</th>
-                <th>Author</th>
-                <th>Format</th>
-                <th>Color(s)</th>
-				<th>Deck Name</th>
+                <th>Quantity</th>
+                <th>Card</th>
+                <th>Set</th>
               </tr>
             </thead>
             <tbody>
 				<?php
-					require_once "login.php";
-					
-					#login code for MySQL DB, login details set in "login.php" above.
-					$db_server = mysqli_connect($db_hostname, $db_username, $db_password);
-					if(!$db_server) die("Unable to connect to MySQL: " . mysqli_error());
-					mysqli_select_db($db_server, $db_database)
-						or die("Unable to select database: " . mysqli_error());
-					
-					$query = "SELECT * FROM decknum";
-					$result = mysqli_query($db_server, $query);
-					if(!$result) die("Database access failed: " . mysqli_error());
-					$rows = mysqli_num_rows($result);
-					
-					for($i = 0; $i < $rows; $i++){
+					for($i=0; $i < $rows; $i++){
 						$row = mysqli_fetch_row($result);
-						echo "<tr>";
-						echo "<td>$row[0]</td>";
-						echo "<td>$row[1]</td>";
-						echo "<td>$row[2]</td>";
-						echo "<td>$row[3]</td>";
-						echo "</tr>";
+						echo "<tr>\n";
+						echo "<td>$row[0]</td>\n";
+						echo "<td>$row[1]</td>\n";
+						echo "<td>$row[2]</td>\n";
+						echo "</tr>\n";
 					}
 				?>
             </tbody>
           </table>
 		  <p>
-			<a href="add.php"><button type="button" class="btn btn-primary">Add Item</button></a>
-			<a href="edit.php"><button type="button" class="btn btn-warning">Edit List</button></a>
+			<a href="add_cards.php"><button type="button" class="btn btn-primary">Add Item</button></a>
+			<a href="edit_cards.php"><button type="button" class="btn btn-warning">Edit List</button></a>
 		  </p>
         </div>
 
@@ -111,7 +146,14 @@
 
     <!-- Bootstrap core JavaScript ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script src="js/docs.min.js"></script>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.2/jquery-ui.js"></script>
+	
+	<!-- The following basic piece of javascript corresponds to the main_navbar.php file allowing me to set the active link styling from Bootstrap to the navbar link in the menu for this specific page. It had to be placed at the bottom so it would load after and be applied correctly to the navbar. -->
+	<script>
+		document.getElementById("view_cards").className = "active";
+	</script>
 </html>
