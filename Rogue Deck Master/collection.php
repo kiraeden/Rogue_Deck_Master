@@ -44,30 +44,38 @@
 			mysqli_select_db($db_server, $db_database)
 				or die("Unable to select database: " . mysqli_error());
 			
-			$quantity = $cardname = $set = "";
+			$quantity = $cardname = $set_name = "";
 			
 			if(!empty($_POST['card-submit'])){
 				$quantity = test_input($_POST["quantity"]);
 				$cardname = test_input($_POST["cardname"]);
 				
+				/*
 				$string = file_get_contents("AllCards.json");
 				$json_a = json_decode($string, true);
 				
 				foreach ($json_a as $card => $value){
 					if($cardname == test_input($card)){ #this is my version of input validation. I will re-compare the card as it's being entered into the database to ensure that only card data is entered into this field (and so that a mis-spelled card name can't occur either)
 						$valid_card = true;
-						$type = $value['types']; #Creature types such as Enchantment Creature appear together in the type section of the JSON doc, so to make them appear correctly, I may have to do some parsing of the 'types' to check for the Creature type specifically.
 						break;
 					} #There needs to be an additional validation notification if the data the user attempts to enter is not a part of the JSON card database file. But I think this could also be handled in the form by Javascript. need to investigate.
-				}
+				}*/
+				
+				$query = "INSERT INTO $user(quantity, cardname, set_name) VALUES ('$quantity', '$cardname', '$set_name')";
+				$result = mysqli_query($db_server, $query);
 			}
 			
 			$query = "SELECT * FROM $user"; #need to make the database for the user's collection
 			$result = mysqli_query($db_server, $query);
 			
+			$rows = 0;
+			
 			if(!$result){
-				$query = "CREATE TABLE $user(quantity VARCHAR(128), cardname VARCHAR(128), set VARCHAR(128))";
+				$query = "CREATE TABLE $user(quantity VARCHAR(128), cardname VARCHAR(128), set_name VARCHAR(128))";
 				mysqli_query($db_server, $query);
+			}
+			else{
+				$rows = mysqli_num_rows($result);
 			}
 			
 			function test_input($data) {
@@ -76,8 +84,6 @@
 				$data = htmlspecialchars($data);
 				return $data;
 			}
-			
-			$rows = mysqli_num_rows($result);
 		?>
 		
 		<!-- Begin Search and Entry Form for collection entry -->

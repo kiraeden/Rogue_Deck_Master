@@ -54,12 +54,18 @@
 				}
 				
 				#this query sequence is to figure out how many decks are in the system already so I can sequentially number the new deck information about to be entered.
-				$query = "SELECT * FROM decknum";
-				$result = mysqli_query($db_server, $query);
-				$rows = mysqli_num_rows($result);
 				
+				$query = "SELECT * FROM lastdecknum";
+				$result = mysqli_query($db_server, $query);
+				$row = mysqli_fetch_row($result);
+				$deck_count = $row[0];
+				$num = $deck_count;
 				$decknum .= 'deck_';
-				$decknum .= $rows;
+				$decknum .= $num;
+				$deck_count = 1 + $deck_count;
+				
+				$query = "UPDATE lastdecknum SET newestdeck='$deck_count' WHERE newestdeck = '$num'";
+				mysqli_query($db_server, $query);
 				
 				$query = "INSERT INTO decknum(decknum, title, author, format, colors, description, user) VALUES ('$decknum', '$title', '$author', '$format', '$colors', '$description', '$user')"; #this query inserts the deck information into the database.
 				mysqli_query($db_server, $query);

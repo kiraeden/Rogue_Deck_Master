@@ -2,7 +2,7 @@
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation" > <!-- add a piece of PHP in this line to hide the navbar when a user isn't logged in: (php) if(!$login){echo("style='display:none;'")}-->
 	<div class="container">
 		<div class="navbar-header">
-			<a class="navbar-brand" href="Index.html">Rogue Deck Master</a> <!-- need to come up with a good name for this site -->
+			<a class="navbar-brand" href="index.php">Rogue Deck Master</a> <!-- need to come up with a good name for this site -->
 		</div>
 		<div class="navbar-collapse collapse">
 			<ul class="nav navbar-nav">
